@@ -11,11 +11,16 @@ from django.views.generic import TemplateView
 from chartjs.views.lines import BaseLineChartView
 
 
+
+
 def home(request):
+    return render(request, 'welcome.html')
+
+
+def reporting(request):
     # item = Sale.objects.order_by('date').values()
     item = Sale.objects.values()
     
-    print("item: ", item)
     df_params = {1: {}, 2: {}}
     for entry in item:
         if entry['date'].strftime('%Y-%m-%d') not in df_params[entry['invoice_id']]:
