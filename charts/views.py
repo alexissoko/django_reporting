@@ -52,18 +52,18 @@ def reporting(request):
     }
     return render(request, 'index.html', context=mydict)
 
-
+"""
 class LineChartJSONView(BaseLineChartView):
     def get_labels(self):
-        """Return 7 labels for the x-axis."""
+        # ""Return 7 labels for the x-axis.""
         return ["January", "February", "March", "April", "May", "June", "July"]
 
     def get_providers(self):
-        """Return names of datasets."""
+        # ""Return names of datasets.""
         return ["Central", "Eastside", "Westside"]
 
     def get_data(self):
-        """Return 3 datasets to plot."""
+        # ""Return 3 datasets to plot.""
 
         return [[75, 44, 92, 11, 44, 95, 35],
                 [41, 92, 18, 3, 73, 87, 92],
@@ -94,3 +94,5 @@ class ChartData(APIView):
                 "default": default_items,
         }
         return Response(data)
+        
+"""
