@@ -26,6 +26,10 @@
                 {% if user.is_authenticated %}
                     <ul class="navbar-nav ml-auto">
                         <li class="nav-item">
+                            <a class="nav-link active" aria-current="page" href="{% url 'reporting' %}">Reporting</a>
+                          </li>
+                        <!--button class="btn btn-outline-success" type="submit">reporting</button-->
+                        <li class="nav-item">
                             <a class="nav-link dropdown-toggle" href="#" id="userMenu"
                                 data-toggle="dropdown" aria-haspopup="true"
                                 aria-expanded="false">
@@ -37,11 +41,9 @@
                                 <div class="dropdown-divider"></div>
                                 <a href="#" class="dropdown-item">Purchases</a>
                                 <div class="dropdown-divider"></div>
-                                <a href="#" class="dropdown-item">Reporting</a>
-                                <div class="dropdown-divider"></div>
                                 <a class="dropdown-item"href="#">Change password</a>
                                 <div class="dropdown-divider"></div>
-                                <a class="dropdown-item" href="#">Log Out</a>
+                                <a class="dropdown-item" href="/admin/logout/">Log Out</a>
                             </div>
                         </li>
                     </ul>
@@ -57,8 +59,10 @@
             </div>
         </nav>
         <div class="container">
+            {% if user.is_authenticated %}
             {% block content %}
             {% endblock content %}
+            {% endif %}
         </div>
 
         <!-- Optional JavaScript -->

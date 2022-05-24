@@ -1,4 +1,5 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
+from django.contrib.auth import logout as logouts
 from .models import *
 import pandas as pd
 from rest_framework.views import APIView
@@ -51,6 +52,12 @@ def reporting(request):
         'df_labels':df_labels
     }
     return render(request, 'index.html', context=mydict)
+
+def logout(request):
+    if request.method == "POST":
+        logouts(request)
+        return redirect('home')
+
 
 """
 class LineChartJSONView(BaseLineChartView):
