@@ -18,7 +18,7 @@ from django.urls import path, include
 
 
 urlpatterns = [
-    path('admin/', admin.site.urls), 
+    path('admin/', admin.site.urls, name='control'),
     # how to reference inside admin side
     path('', include('charts.urls')), 
 ]

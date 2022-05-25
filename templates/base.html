@@ -26,7 +26,9 @@
                 {% if user.is_authenticated %}
                     <ul class="navbar-nav ml-auto">
                         <li class="nav-item">
-                            <a class="nav-link active" aria-current="page" href="{% url 'reporting' %}">Reporting</a>
+                            <a class="nav-link px-4 {% if request.path == url %}active{% endif %}" aria-current="page" href="{% url 'reporting' %}">Reporting</a>
+
+                            <!--a class="nav-link px-4 active" aria-current="page" href="{% url 'reporting' %}">Reporting</a-->
                           </li>
                         <!--button class="btn btn-outline-success" type="submit">reporting</button-->
                         <li class="nav-item">
@@ -37,7 +39,7 @@
                             </a>
                             <div class="dropdown-menu dropdown-menu-right"
                                 aria-labelledby="userMenu">
-                                <a href="admin/charts/sale/" class="dropdown-item">Sales</a>
+                                <a href="/admin/charts/sale/" class="dropdown-item">Sales</a>
                                 <div class="dropdown-divider"></div>
                                 <a href="#" class="dropdown-item">Purchases</a>
                                 <div class="dropdown-divider"></div>
@@ -85,3 +87,11 @@
         crossorigin="anonymous"></script>
     </body>
 </html>
+<style>
+    .nav-link px-4:active {
+        color:grey;
+    };
+    .navbar-brand active {
+        color:grey;
+    };
+</style>
