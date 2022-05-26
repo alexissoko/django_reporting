@@ -9,7 +9,7 @@ from django.shortcuts import render
 
 # Create your views here.
 from django.views.generic import TemplateView
-from chartjs.views.lines import BaseLineChartView
+# from chartjs.views.lines import BaseLineChartView
 
 
 
@@ -19,9 +19,15 @@ def home(request):
 
 
 def reporting(request):
-    # item = Sale.objects.order_by('date').values()
-    item = Sale.objects.values()
-    all_values = Sale.objects.all()
+    """
+    if request.method == 'GET':
+        # item = Sale.objects.order_by('date').values()
+        item = Sale.objects.values()
+        all_values = Sale.objects.all()
+    else:
+        all_values = Sale.objects.get(report=True)
+        item = all_values.values()
+        
     all_items = set()
     for obj in all_values:
         if obj.invoice.name not in all_items:
@@ -33,7 +39,9 @@ def reporting(request):
             df_params[entry['invoice_id']][entry['date'].strftime('%Y-%m-%d')] = entry['quantity']
         else:
             df_params[entry['invoice_id']][entry['date'].strftime('%Y-%m-%d')] += entry['quantity']
-    df= pd.DataFrame(item)    
+    df= pd.DataFrame(item)
+    print("df")    
+    print(df)    
     df_labels= [str(x) for x in df.date.tolist()]
     df_labels= sorted(list(set(df_labels)))
 
@@ -59,7 +67,23 @@ def reporting(request):
         'df3':df3,
         'df_labels':df_labels
     }
+    "df1" : [x["quantity"] for x in Sale.objects.values().order_by("date") if x["invoice_id"] == 1],
+    "df2" : [x["quantity"] for x in Sale.objects.values().order_by("date") if x["invoice_id"] == 2],
+    """
+
+    mydict= {
+        'sales':Sale.objects.values().order_by("date"),
+        'products':Product.objects.values().order_by("date"),
+        "df1" : sorted({x["date"].strftime('%Y-%m-%d'): x["quantity"] for x in Sale.objects.values().order_by("date") if x["invoice_id"] == 1}.items()),
+        "df2" : sorted({x["date"].strftime('%Y-%m-%d'): x["quantity"] for x in Sale.objects.values().order_by("date") if x["invoice_id"] == 2}.items()),
+        "df_labels" : list(set([x["date"].strftime('%Y-%m-%d') for x in Sale.objects.values().order_by("date")])),
+        }
+
+    print("mydict")
+    print(mydict["df1"])
+    print(mydict["df2"])
     return render(request, 'index.html', context=mydict)
+
 
 def logout(request):
     if request.method == "POST":

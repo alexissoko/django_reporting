@@ -17,29 +17,33 @@
         <div class="card">
             <div class="container-fluid">
                 <canvas id="myChart"></canvas>
-                <!--
-                {% for obj in all_items %}
-                    <div class="form-check form-switch form-check-inline"">
+
+                {% for prod in products %}
+                    <div class="form-check form-switch form-check-inline">
                         <input class="form-check-input" type="checkbox" id="flexSwitchCheckDefault">
-                        <label class="form-check-label" for="flexSwitchCheckDefault">{{ obj }}</label>
+                        <label class="form-check-label" for="flexSwitchCheckDefault">{{prod.name}}</label>
                     </div>
                 {% endfor %}
-                -->
+                {{ df_labels }}
             </div>
         </div>
     </div>
-
+    
     <script>
         // const array = {{all_items}};
         // first = array[0];
         // console.log("first");
         // console.log(first);
-        const df1 = {{ df1|safe }};
+        // const sales = {{ sales|safe }};
+        // const products = {{ products|safe }}
+        
+        //const df3 = [x["invoice_id"] == products[3] for x in sales];
+        const df1 = {{df1|safe}};
         const df2 = {{df2|safe}};
-        const df3 = {{df3|safe}};
-
-
+        //const df3 = {{df3|safe}};
         const df_labels = {{df_labels|safe}};
+        console.log("df_labels");
+        console.log(df_labels);
         const ctx = document.getElementById('myChart').getContext('2d');
         const myChart = new Chart(ctx, {
             type: 'bar',
@@ -48,8 +52,9 @@
                 labels: df_labels,
                 datasets: [{
                     // label: first,
-                    label: "{{ all_items|first }}",
-                    // data: [12, 19, 3, 5, 2, 3],
+                    // label: "{{ all_items|first }}",
+                    label: "names 1",
+                    // data: [12, 19, 3],
                     data: df1,
                     backgroundColor: [
                         'rgba(255, 99, 132, 0.2)',
@@ -71,13 +76,15 @@
                 },{
                     label: "all_items|sec ",
                     data: df2,
+                    //data: [8, 5, 4],
+
                     backgroundColor: [
                     //    'rgba(134, 99, 132, 0.2)',
                     //    'rgba(154, 162, 235, 0.2)',
-                        'rgba(25, 206, 86, 0.2)',
+                    //  'rgba(25, 206, 86, 0.2)',
                     //    'rgba(45, 192, 192, 0.2)',
                     //    'rgba(253, 102, 255, 0.2)',
-                    //    'rgba(155, 159, 64, 0.2)'
+                        'rgba(155, 159, 64, 0.2)'
                     ],
                     borderColor: [
                     //   'rgba(255, 9, 132, 1)',
@@ -90,7 +97,8 @@
                     borderWidth: 2
                 },{
                     label: "thrd",
-                    data: df3,
+                    data: "df0",
+                    //data: [56, 36, 24],
                     backgroundColor: [
                     //    'rgba(134, 99, 132, 0.2)',
                         'rgba(154, 162, 235, 0.2)',
