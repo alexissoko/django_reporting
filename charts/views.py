@@ -19,64 +19,13 @@ def home(request):
 
 
 def reporting(request):
-    """
-    if request.method == 'GET':
-        # item = Sale.objects.order_by('date').values()
-        item = Sale.objects.values()
-        all_values = Sale.objects.all()
-    else:
-        all_values = Sale.objects.get(report=True)
-        item = all_values.values()
-        
-    all_items = set()
-    for obj in all_values:
-        if obj.invoice.name not in all_items:
-            all_items.add(obj.invoice.name)
-
-    df_params = {1: {}, 2: {}, 3: {}}
-    for entry in item:
-        if entry['date'].strftime('%Y-%m-%d') not in df_params[entry['invoice_id']]:
-            df_params[entry['invoice_id']][entry['date'].strftime('%Y-%m-%d')] = entry['quantity']
-        else:
-            df_params[entry['invoice_id']][entry['date'].strftime('%Y-%m-%d')] += entry['quantity']
-    df= pd.DataFrame(item)
-    print("df")    
-    print(df)    
-    df_labels= [str(x) for x in df.date.tolist()]
-    df_labels= sorted(list(set(df_labels)))
-
-    for year in df_labels:
-        if year not in df_params[1]:
-            df_params[1][year] = 0
-        if year not in df_params[2]:
-            df_params[2][year] = 0
-        if year not in df_params[3]:
-            df_params[3][year] = 0
-
-    df1 = sorted(df_params[1].items())
-    df2 = sorted(df_params[2].items())
-    df3 = sorted(df_params[3].items())
-    df1 = [x[1] for x in df1]
-    df2 = [x[1] for x in df2]
-    df3 = [x[1] for x in df3]
-    
-    mydict={
-        'all_items':[str(x) for x in all_items],
-        'df1':df1,
-        'df2':df2,
-        'df3':df3,
-        'df_labels':df_labels
-    }
-    "df1" : [x["quantity"] for x in Sale.objects.values().order_by("date") if x["invoice_id"] == 1],
-    "df2" : [x["quantity"] for x in Sale.objects.values().order_by("date") if x["invoice_id"] == 2],
-    """
 
     mydict= {
         'sales':Sale.objects.values().order_by("date"),
         'products':Product.objects.values().order_by("date"),
         "df1" : sorted({x["date"].strftime('%Y-%m-%d'): x["quantity"] for x in Sale.objects.values().order_by("date") if x["invoice_id"] == 1}.items()),
         "df2" : sorted({x["date"].strftime('%Y-%m-%d'): x["quantity"] for x in Sale.objects.values().order_by("date") if x["invoice_id"] == 2}.items()),
-        "df_labels" : list(set([x["date"].strftime('%Y-%m-%d') for x in Sale.objects.values().order_by("date")])),
+        "df_labels" : list(set([x["date"].strftime('%Y-%m-%d') for x in Sale.objects.values().order_by("-date")])),
         }
 
     print("mydict")

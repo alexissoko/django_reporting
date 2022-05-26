@@ -17,14 +17,15 @@
         <div class="card">
             <div class="container-fluid">
                 <canvas id="myChart"></canvas>
-
+                <!--
                 {% for prod in products %}
                     <div class="form-check form-switch form-check-inline">
                         <input class="form-check-input" type="checkbox" id="flexSwitchCheckDefault">
                         <label class="form-check-label" for="flexSwitchCheckDefault">{{prod.name}}</label>
                     </div>
                 {% endfor %}
-                {{ df_labels }}
+                -->
+
             </div>
         </div>
     </div>
@@ -38,12 +39,12 @@
         // const products = {{ products|safe }}
         
         //const df3 = [x["invoice_id"] == products[3] for x in sales];
+        //const products = {{products|safe}};
         const df1 = {{df1|safe}};
         const df2 = {{df2|safe}};
         //const df3 = {{df3|safe}};
         const df_labels = {{df_labels|safe}};
-        console.log("df_labels");
-        console.log(df_labels);
+
         const ctx = document.getElementById('myChart').getContext('2d');
         const myChart = new Chart(ctx, {
             type: 'bar',
@@ -52,8 +53,7 @@
                 labels: df_labels,
                 datasets: [{
                     // label: first,
-                    // label: "{{ all_items|first }}",
-                    label: "names 1",
+                    label: "{{products.0.name}}",
                     // data: [12, 19, 3],
                     data: df1,
                     backgroundColor: [
@@ -74,7 +74,7 @@
                     ],
                     borderWidth: 2
                 },{
-                    label: "all_items|sec ",
+                    label: "{{products.1.name}}",
                     data: df2,
                     //data: [8, 5, 4],
 
@@ -96,7 +96,7 @@
                     ],
                     borderWidth: 2
                 },{
-                    label: "thrd",
+                    label: "{{products.3.name}}",
                     data: "df0",
                     //data: [56, 36, 24],
                     backgroundColor: [
