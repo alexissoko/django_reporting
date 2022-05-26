@@ -21,68 +21,16 @@ def home(request):
 def reporting(request):
 
     mydict= {
-        'sales':Sale.objects.values().order_by("date"),
-        'products':Product.objects.values().order_by("date"),
-        "df1" : sorted({x["date"].strftime('%Y-%m-%d'): x["quantity"] for x in Sale.objects.values().order_by("date") if x["invoice_id"] == 1}.items()),
-        "df2" : sorted({x["date"].strftime('%Y-%m-%d'): x["quantity"] for x in Sale.objects.values().order_by("date") if x["invoice_id"] == 2}.items()),
-        "df_labels" : list(set([x["date"].strftime('%Y-%m-%d') for x in Sale.objects.values().order_by("-date")])),
+        'sales':Sale.objects.values().order_by("-date"),
+        'products':Product.objects.values().order_by("-date"),
+        "df1" : sorted({x["date"].strftime('%Y-%m-%d'): x["quantity"] for x in Sale.objects.values().order_by("-date") if x["invoice_id"] == 1}.items()),
+        "df2" : sorted({x["date"].strftime('%Y-%m-%d'): x["quantity"] for x in Sale.objects.values().order_by("-date") if x["invoice_id"] == 2}.items()),
+        "df_labels" : list({x["date"].strftime('%Y-%m-%d') for x in Sale.objects.values().order_by("-date")}),
         }
 
     print("mydict")
     print(mydict["df1"])
     print(mydict["df2"])
+    print(mydict["df_labels"])
     return render(request, 'index.html', context=mydict)
 
-
-def logout(request):
-    if request.method == "POST":
-        logouts(request)
-        return redirect('home')
-
-
-
-
-"""
-class LineChartJSONView(BaseLineChartView):
-    def get_labels(self):
-        # ""Return 7 labels for the x-axis.""
-        return ["January", "February", "March", "April", "May", "June", "July"]
-
-    def get_providers(self):
-        # ""Return names of datasets.""
-        return ["Central", "Eastside", "Westside"]
-
-    def get_data(self):
-        # ""Return 3 datasets to plot.""
-
-        return [[75, 44, 92, 11, 44, 95, 35],
-                [41, 92, 18, 3, 73, 87, 92],
-                [41, 92, 18, 3, 73, 87, 92],
-                [87, 21, 94, 3, 90, 13, 65]]
-
-
-line_chart = TemplateView.as_view(template_name='line_chart.html')
-line_chart_json = LineChartJSONView.as_view()
-# Create your views here.
-
-class ChartData(APIView):
-    authentication_classes = []
-    permission_classes = []
-
-    def get(self, request, format=None):
-        qs=Sale.objects.all()
-        
-        labels = []
-        default_items = []
-
-        for item in qs:
-            labels.append(item.date)
-            default_items.append(item.quantity)
-
-        data = {
-                "labels": labels,
-                "default": default_items,
-        }
-        return Response(data)
-        
-"""

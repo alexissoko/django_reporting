@@ -17,6 +17,7 @@
         <div class="card">
             <div class="container-fluid">
                 <canvas id="myChart"></canvas>
+                <input oninput="updateChart(this)" type="range" id="points" value="2" min="1" max="3">
                 <!--
                 {% for prod in products %}
                     <div class="form-check form-switch form-check-inline">
@@ -45,10 +46,7 @@
         //const df3 = {{df3|safe}};
         const df_labels = {{df_labels|safe}};
 
-        const ctx = document.getElementById('myChart').getContext('2d');
-        const myChart = new Chart(ctx, {
-            type: 'bar',
-            data: {
+        const data = {
                 //labels: ['Red', 'Blue', 'Yellow', 'Green', 'Purple', 'Orange'],
                 labels: df_labels,
                 datasets: [{
@@ -117,7 +115,10 @@
                     ],
                     borderWidth: 3
                 }]
-            },
+            };
+        const config = {
+            type: 'bar',
+            data,
             options: {
                 plugins: {
                     title: {
@@ -139,7 +140,21 @@
                     }
                 },
             },
-        });
+        };
+        const ctx = document.getElementById('myChart');
+        const myChart = new Chart(
+            ctx, 
+            config);
+        
+        function updateChart(range) {
+            // console.log(range.value)
+            // console.log(myChart.config.data.labels)
+            // const rangeValue = labels.slice(0, range.value);
+             console.log(rangeValue)
+            myChart.config.data.labels = rangeValue;
+            myChart.update();
+        };
+
     </script>
     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/popper.js@1.14.7/dist/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
