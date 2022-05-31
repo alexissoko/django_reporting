@@ -33,28 +33,36 @@ def reporting(request):
         print(request)
         sales = Sale.objects.all().order_by("-date")
 
-    data = {prod.invoice.name: {} for prod in sales}
-    labels = sorted([x[0].strftime('%Y-%m-%d') for x in sales.values_list("date").distinct()])
-    print("labels")
-    print(labels)
+    all_data = {prod.invoice.name: {} for prod in sales}
+
+    df_labels = sorted([x[0].strftime('%Y-%m-%d') for x in sales.values_list("date").distinct()])
+
     sales.values().order_by("-date")
     for sale in sales:
-        data[sale.invoice.name][sale.date.strftime('%Y-%m-%d')] = sale.quantity
+        all_data[sale.invoice.name][sale.date.strftime('%Y-%m-%d')] = sale.quantity
     
-    for label in labels:
-        for k, v in data.items():
+    for label in df_labels:
+        for k, v in all_data.items():
             if label not in v:
-                data[k][label] = 0
+                all_data[k][label] = 0
     
-    print("data")
-    print(data)
+    for k,v in all_data.items():
+        all_data[k] = [all_data[k][x] for x in sorted(all_data[k])]
+    print("all_data")
+    labels = list(all_data.keys())
+
     mydict= {
         'sales':sales,
         'products':Product.objects.values().order_by("-date"),
-        "data" : sorted(data),
+        "all_data" : sorted(all_data),
         "df1" : sorted({x["date"].strftime('%Y-%m-%d'): x["quantity"] for x in sales.values().order_by("-date") if x["invoice_id"] == 1}.items()),
-        "df2" : sorted({x["date"].strftime('%Y-%m-%d'): x["quantity"] for x in sales.values().order_by("-date") if x["invoice_id"] == 2}.items()),
-        "df_labels" : labels
+        "df_labels" : df_labels,
+        "labels" : labels,
+        # "df1" : sorted({x["date"].strftime('%Y-%m-%d'): x["quantity"] for x in sales.values().order_by("-date") if x["invoice_id"] == 1}.items()),
+        # "df2" : sorted({x["date"].strftime('%Y-%m-%d'): x["quantity"] for x in sales.values().order_by("-date") if x["invoice_id"] == 2}.items()),
+        "df1" : all_data["Mil hojas"],
+        "df2" : all_data["Flan casero"]
+    
     }
     return render(request, 'index.html', context=mydict)
 
