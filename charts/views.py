@@ -34,11 +34,17 @@ def reporting(request):
         sales = Sale.objects.all().order_by("-date")
 
     data = {prod.invoice.name: {} for prod in sales}
-    labels = sorted([x[0].strftime('%Y-%m-%d') for x in sales.values_list("date")])
+    labels = sorted([x[0].strftime('%Y-%m-%d') for x in sales.values_list("date").distinct()])
     print("labels")
     print(labels)
+    sales.values().order_by("-date")
     for sale in sales:
         data[sale.invoice.name][sale.date.strftime('%Y-%m-%d')] = sale.quantity
+    
+    for label in labels:
+        for k, v in data.items():
+            if label not in v:
+                data[k][label] = 0
     
     print("data")
     print(data)
