@@ -20,9 +20,10 @@
                 <canvas id="myChart"></canvas>
                 <form method="GET">
                     <div class="date_query">
-                        <input type="date" name="begin">
-                        <input type="submit" value="Send">
-                    </form>
+                        <input type="date" name="begin" format= 'dd/mm/yyyy' startDate= '-3d'>
+                        <input type="submit" value="To Date" >
+                    </div>
+                </form>
                     
                 <!--
                 <input oninput="updateChart(this)" type="range" id="points" value="2" min="1" max="3">
@@ -39,106 +40,55 @@
     </div>
 
     <script>
-        
-        //const df3 = [x["invoice_id"] == products[3] for x in sales];
-        //const products = {{products|safe}};
-        const df1 = {{df1|safe}};
-        const df2 = {{df2|safe}};
-        //const df3 = {{df3|safe}};
-        const df_labels = {{df_labels|safe}};
-        const labels = {{labels|safe}};
-        const all_data = {{all_data|safe}}
-        console.log("all_data")
-        console.log(all_data)
+    const all_data = {{all_data|safe}};
 
-        const data = {
-                //labels: ['Red', 'Blue', 'Yellow', 'Green', 'Purple', 'Orange'],
-                labels: df_labels,
-                datasets: [{
-                    // label: first,
-                    label: "{{products.0.name}}",
-                    // data: [12, 19, 3],
-                    data: df1,
-                    backgroundColor: [
-                        'rgba(255, 99, 132, 0.2)',
-                    //    'rgba(54, 162, 235, 0.2)',
-                    //    'rgba(255, 206, 86, 0.2)',
-                    //    'rgba(75, 192, 192, 0.2)',
-                    //    'rgba(153, 102, 255, 0.2)',
-                    //    'rgba(255, 159, 64, 0.2)'
-                    ],
-                    borderColor: [
-                        'rgba(255, 99, 132, 1)',
-                    //    'rgba(54, 162, 235, 1)',
-                    //    'rgba(255, 206, 86, 1)',
-                    //    'rgba(75, 192, 192, 1)',
-                    //    'rgba(153, 102, 255, 1)',
-                    //    'rgba(255, 159, 64, 1)'
-                    ],
-                    borderWidth: 2
-                },{
-                    label: "{{products.1.name}}",
-                    data: df2,
-                    //data: [8, 5, 4],
-
-                    backgroundColor: [
-                    //    'rgba(134, 99, 132, 0.2)',
-                    //    'rgba(154, 162, 235, 0.2)',
-                    //  'rgba(25, 206, 86, 0.2)',
-                    //    'rgba(45, 192, 192, 0.2)',
-                    //    'rgba(253, 102, 255, 0.2)',
-                        'rgba(155, 159, 64, 0.2)'
-                    ],
-                    borderColor: [
-                    //   'rgba(255, 9, 132, 1)',
-                    //    'rgba(54, 62, 235, 1)',
-                    //    'rgba(255, 26, 86, 1)',
-                    //    'rgba(75, 12, 192, 1)',
-                        'rgba(53, 102, 255, 1)',
-                    //    'rgba(25, 159, 64, 1)'
-                    ],
-                    borderWidth: 2
-                }]
-            };
-        const config = {
-            type: 'bar',
-            data,
-            options: {
-                plugins: {
-                    title: {
-                        display: true,
-                        text: 'Chart.js Bar Chart - Stacked'
-                    },
-                },
-                responsive: true,
-                scales: {
-                    x: {
-                        stacked: true,
-                    },
-                    y: {
-                        stacked: true,
-                        ticks: {
-                            // Include a dollar sign in the ticks
-
-                        },
+    //const df3 = {{df3|safe}};
+    const df_labels = {{df_labels|safe}};
+    const labels = {{labels|safe}};
+    const values = {{values|safe}};
+    const other_model = {};
+    for (let i = 0; i < values.length; i++) {
+        other_model[labels[i]] = values[i];
+        }
+    console.log(other_model);
+    window.onload=function(){/* ww w  .  j a  va  2s.co m*/
+    var ctx = document.getElementById("myChart");
+    var myChart = new Chart(ctx, {
+        type: 'bar',
+        data: {
+            labels: df_labels,
+            datasets: []
+        },
+        options: {
+            scales: {
+                yAxes: [{
+                    ticks: {
+                        beginAtZero: true,
+                        callback: function(value, index, values) {
+                            if (parseInt(value) >= 1000) {
+                                return value.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+                            } else {
+                                return value;
+                            }
+                        }
                     }
-                },
-            },
+                }]
+            }
+        }
+    });
+    var model = other_model;
+    for (year in model) {
+    var newDataset = {
+        label: year,
+            data: []
         };
-        const ctx = document.getElementById('myChart');
-        const myChart = new Chart(
-            ctx, 
-            config);
-
-        // function updateChart(range) {
-            // console.log(range.value)
-            // console.log(myChart.config.data.labels)
-            // const rangeValue = labels.slice(0, range.value);
-        //      console.log(rangeValue)
-        //     myChart.config.data.labels = rangeValue;
-        //     myChart.update();
-        // };
-
+        for (value in model[year]) {
+        newDataset.data.push(model[year][value]);
+        }
+        myChart.config.data.datasets.push(newDataset);
+    }
+        myChart.update();
+        }
     </script>
     
 </body>
