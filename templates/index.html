@@ -40,13 +40,19 @@
     </div>
 
     <script>
-    const all_data = {{all_data|safe}};
 
-    //const df3 = {{df3|safe}};
     const df_labels = {{df_labels|safe}};
     const labels = {{labels|safe}};
     const values = {{values|safe}};
     const other_model = {};
+    const colors = [
+                'rgba(134, 99, 132, 0.2)',
+                'rgba(154, 162, 235, 0.2)',
+                'rgba(25, 206, 86, 0.2)',
+                'rgba(45, 192, 192, 0.2)',
+                'rgba(253, 102, 255, 0.2)',
+                'rgba(155, 159, 64, 0.2)'
+            ]
     for (let i = 0; i < values.length; i++) {
         other_model[labels[i]] = values[i];
         }
@@ -60,35 +66,43 @@
             datasets: []
         },
         options: {
+            plugins: {
+                title: {
+                    display: true,
+                    text: 'Chart.js Bar Chart - Stacked'
+                },
+            },
             scales: {
-                yAxes: [{
+                x: {
+                    stacked: true,
+                },
+                y: {
+                    stacked: true,
                     ticks: {
                         beginAtZero: true,
-                        callback: function(value, index, values) {
-                            if (parseInt(value) >= 1000) {
-                                return value.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
-                            } else {
-                                return value;
-                            }
-                        }
                     }
-                }]
+                },
             }
         }
     });
-    var model = other_model;
-    for (year in model) {
-    var newDataset = {
-        label: year,
-            data: []
-        };
-        for (value in model[year]) {
-        newDataset.data.push(model[year][value]);
-        }
-        myChart.config.data.datasets.push(newDataset);
+    var pointer = 0;
+    for (product in other_model) {
+        var newDataset = {
+            label: product,
+            data: [],
+            /* TODO randomize colors for each product */
+            backgroundColor: colors[Math.floor((Math.random() * colors.length)%colors.length)],
+            borderColor: colors[Math.floor((Math.random() * colors.length)%colors.length)],
+            // backgroundColor: colors.pop(),
+            borderWidth: 3
+            };
+            for (value in other_model[product]) {
+                newDataset.data.push(other_model[product][value]);
+            }
+            myChart.config.data.datasets.push(newDataset);
     }
-        myChart.update();
-        }
+    myChart.update();
+    }
     </script>
     
 </body>
