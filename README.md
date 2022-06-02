@@ -2,7 +2,7 @@
 
 ## Installation
 
-Use the package manager [pip](https://pip.pypa.io/en/stable/) to install foobar.
+Use the package manager [pip](https://pip.pypa.io/en/stable/) to install de app requirements.
 
 ```bash
 clone repo
@@ -15,6 +15,7 @@ pip install -r requierements
 
 
 python manage.py runserver
+python manage.py createsuperuser 
 add data from admin
 check results in frontend
 
