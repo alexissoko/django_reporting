@@ -26,3 +26,4 @@ Please make sure to update tests as appropriate.
 
 ## License
 [MIT](https://choosealicense.com/licenses/mit/)
+<img width="1439" alt="Screen Shot 2022-06-02 at 11 41 55 AM" src="https://user-images.githubusercontent.com/59481639/171655529-0815b340-c27c-4e4b-867b-e2ac6f4dadf2.png">
