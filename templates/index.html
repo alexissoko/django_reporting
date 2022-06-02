@@ -66,12 +66,6 @@
             datasets: []
         },
         options: {
-            plugins: {
-                title: {
-                    display: true,
-                    text: 'Chart.js Bar Chart - Stacked'
-                },
-            },
             scales: {
                 x: {
                     stacked: true,
@@ -85,7 +79,7 @@
             }
         }
     });
-    var pointer = 0;
+    
     for (product in other_model) {
         var newDataset = {
             label: product,
