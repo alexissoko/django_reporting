@@ -2,9 +2,9 @@ from django.shortcuts import render, redirect
 from django.contrib.auth import logout as logouts
 from .models import *
 from .forms import *
-import pandas as pd
-from rest_framework.views import APIView
-from rest_framework.response import Response
+# import pandas as pd
+# from rest_framework.views import APIView
+# from rest_framework.response import Response
 import json
 
 from django.shortcuts import render
