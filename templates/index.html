@@ -21,7 +21,10 @@
                 <canvas id="myChart"></canvas>
                 <form method="GET">
                     <div class="date_query">
+                        <label for="start">Begining:</label>
                         <input type="date" name="begin" format= 'dd/mm/yyyy' startDate= '-3d'>
+                        <label for="start">Until:</label>
+                        <input type="date" name="until" format= 'dd/mm/yyyy' startDate= '-3d'>
                         <input type="submit" value="To Date" >
                     </div>
                 </form>
@@ -47,12 +50,14 @@
     const values = {{values|safe}};
     const other_model = {};
     const colors = [
-                'rgba(134, 99, 132, 0.2)',
-                'rgba(154, 162, 235, 0.2)',
-                'rgba(25, 206, 86, 0.2)',
+                'rgba(134, 99, 132, 0.5)',
+                'rgba(154, 162, 235, 0.5)',
+                'rgb(60, 179, 113, 0.5)',
+                'rgba(25, 206, 86, 0.6)',
                 'rgba(45, 192, 192, 0.2)',
-                'rgba(253, 102, 255, 0.2)',
-                'rgba(155, 159, 64, 0.2)'
+                'rgba(253, 102, 255, 0.6)',
+                'rgba(155, 159, 64, 0.2)',
+                'rgba(70, 60, 35, 0.4)'
             ]
     for (let i = 0; i < values.length; i++) {
         other_model[labels[i]] = values[i];

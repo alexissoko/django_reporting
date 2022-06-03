@@ -24,10 +24,14 @@ def home(request):
 @login_required
 def reporting(request):
     if request.GET.get("begin"):
-        mesh = request.GET.get("begin")
-        sales = Sale.objects.filter(date__range=[mesh, timezone.now().strftime('%Y-%m-%d')]).order_by("-date")
+        mesh_from = request.GET.get("begin")
     else:
-        sales = Sale.objects.all().order_by("-date")
+        mesh_from = "2000-01-01"
+    if request.GET.get("until"):
+        mesh_to = request.GET.get("until")
+    else:
+        mesh_to = timezone.now().strftime('%Y-%m-%d')
+    sales = Sale.objects.filter(date__range=[mesh_from, mesh_to]).order_by("-date")
 
     all_data = {prod.invoice.name: {} for prod in sales}
     df_labels = sorted([x[0].strftime('%Y-%m-%d') for x in sales.values_list("date").distinct()])
