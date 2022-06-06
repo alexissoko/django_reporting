@@ -112,7 +112,7 @@
         html2canvas(document.getElementById("chart_teiner"), {
             onrendered: function(canvas) {
                 var img = canvas.toDataURL(); //image data of canvas
-                var doc = new jsPDF("p", "mm", "a4");         
+                var doc = new jsPDF('p', 'mm', [297, 210]);         
                 doc.addImage(img, 10, 10);
                 doc.save('test.pdf');
                 }
