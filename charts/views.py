@@ -47,14 +47,6 @@ def reporting(request):
     for k,v in all_data.items():
         all_data[k] = [all_data[k][x] for x in sorted(all_data[k])]
 
-    print("df_labels")
-    print(df_labels)
-    print("all_data")
-    print(all_data)
-    labels = list(all_data.keys())
-    values = list(all_data.values())
-    
-
 
     mydict= {
         'sales':sales,
@@ -62,8 +54,8 @@ def reporting(request):
         "all_data" : sorted(all_data),
         "df1" : sorted({x["date"].strftime('%Y-%m-%d'): x["quantity"] for x in sales.values().order_by("-date") if x["invoice_id"] == 1}.items()),
         "df_labels" : df_labels,
-        "labels" : labels,
-        "values" : values,
+        "labels" : list(all_data.keys()),
+        "values" : list(all_data.values()),
     
     }
     return render(request, 'index.html', context=mydict)
