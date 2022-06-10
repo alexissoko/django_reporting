@@ -4,7 +4,7 @@ from django.db import models
 class Input(models.Model):
     name=models.CharField(max_length=100)
     date=models.DateField(null=True, blank=True)
-    description=models.TextField()
+    description=models.TextField(null=True, blank=True)
     price=models.IntegerField()
     
     def __str__(self) -> str:
@@ -14,7 +14,7 @@ class Input(models.Model):
 class SubProduct(models.Model):
     name=models.CharField(max_length=100)
     date=models.DateField(null=True, blank=True)
-    description=models.TextField()
+    description=models.TextField(null=True, blank=True)
     price=models.ForeignKey(Input, on_delete=models.CASCADE, blank=True, null=True)
     
     def __str__(self) -> str:
@@ -25,7 +25,7 @@ class SubProduct(models.Model):
 class Product(models.Model):
     name=models.CharField(max_length=100)
     date=models.DateField(null=True, blank=True)
-    description=models.TextField()
+    description=models.TextField(null=True, blank=True)
     price=models.ForeignKey(SubProduct, on_delete=models.CASCADE, blank=True, null=True)
     report = models.BooleanField(default=False)
 
@@ -69,11 +69,11 @@ class Sale(models.Model):
 
 # Create your models here.
 class Purchase(models.Model):
-    invoice=models.ForeignKey(Product, on_delete=models.CASCADE)
+    invoice=models.ForeignKey(Input, on_delete=models.CASCADE)
     seller=models.ForeignKey(Provider, on_delete=models.CASCADE, blank=True, null=True)
     date=models.DateField(null=True, blank=True)
-    description=models.TextField()
-    payment=models.CharField(max_length=100)
+    description=models.TextField(null=True, blank=True)
+    payment=models.CharField(max_length=100, null=True, blank=True)
     quantity = models.IntegerField()
     price = models.IntegerField()
     
