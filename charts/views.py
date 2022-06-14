@@ -50,14 +50,17 @@ def reporting_sales(request):
 
     mydict= {
         'sales':sales,
-        'products':Product.objects.values().order_by("-date"),
         "all_data" : sorted(all_data),
-        "df1" : sorted({x["date"].strftime('%Y-%m-%d'): x["quantity"] for x in sales.values().order_by("-date") if x["invoice_id"] == 1}.items()),
+        'products':Product.objects.all(),
+        'inputs':Input.objects.all(),
+        # "df1" : sorted({x["date"].strftime('%Y-%m-%d'): x["quantity"] for x in sales.values().order_by("-date") if x["invoice_id"] == 1}.items()),
         "df_labels" : df_labels,
         "labels" : list(all_data.keys()),
         "values" : list(all_data.values()),
     
     }
+    print('mydict["inputs"]')
+    print(mydict["inputs"])
     return render(request, 'sales.html', context=mydict)
 
 @login_required
@@ -89,7 +92,8 @@ def reporting_providers(request):
 
     mydict= {
         'sales':sales,
-        'products':Product.objects.values().order_by("-date"),
+        'products': Product.objects.values().order_by("-date"),
+        'inputs': Input.objects.all(),
         "all_data" : sorted(all_data),
         "df1" : sorted({x["date"].strftime('%Y-%m-%d'): x["quantity"] for x in sales.values().order_by("-date") if x["invoice_id"] == 1}.items()),
         "df_labels" : df_labels,
@@ -97,5 +101,7 @@ def reporting_providers(request):
         "values" : list(all_data.values()),
     
     }
+    print('mydict["inputs"]')
+    print(mydict["inputs"])
     return render(request, 'providers.html', context=mydict)
 

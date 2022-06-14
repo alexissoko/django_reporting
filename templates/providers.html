@@ -17,35 +17,68 @@
     <title>charting python</title>
 </head>
 <body>
-    <div class="col=8 offset-2 my-5">
-        <div class="card">
-            <div id="chart_teiner">
-                <canvas id="myChart"></canvas>
-                <form method="GET">
-                    <div class="date_query">
-                        <label for="start">Begining:</label>
-                        <input type="date" id="begin" name="begin" format= 'dd/mm/yyyy' startDate= '-3d'>
-                        <label for="start">Until:</label>
-                        <input type="date" id="until" name="until" format= 'dd/mm/yyyy' startDate= '-3d'>
-                        <div id="message"></div>
-                        <input type="submit" id="submit" value="To Date" >
+    <div class="navbar navbar-default visible-xs">
+        <div class="container-fluid">
+          <button class="btn btn-default navbar-btn" data-toggle="collapse" data-target="#filter-sidebar">
+            <i class="fa fa-tasks"></i> Choose Items
+          </button>
+        </div>
+    </div>
+      
+    <div class="container-fluid">
+      
+        <div class="row">
+      
+          <!-- filter sidebar -->
+            <div id="filter-sidebar" class="col-xs-6 col-sm-3 visible-sm visible-md visible-lg collapse sliding-sidebar">
+        
+                <div id="group-1" class="list-group">
+                    {% for inp in inputs %}
+                    <div class="custom-control custom-checkbox">
+                        <input type="checkbox" class="custom-control-input" id="defaultUnchecked">
+                        <label class="custom-control-label" for="defaultUnchecked">{{ inp.name }}</label>
                     </div>
-                </form>
-                    
-                <!--
-                <input oninput="updateChart(this)" type="range" id="points" value="2" min="1" max="3">
-                {% for prod in products %}
-                    <div class="form-check form-switch form-check-inline">
-                        <input class="form-check-input" type="checkbox" id="flexSwitchCheckDefault">
-                        <label class="form-check-label" for="flexSwitchCheckDefault">{{prod.name}}</label>
+                    {% endfor %}
+
+                </div>
+            
+            </div>
+        
+            <!-- table container -->
+            <div class="col-sm-9">
+        
+                <div class="card">
+                    <div id="chart_teiner">
+                        <canvas id="myChart"></canvas>
+                        <form method="GET">
+                            <div class="date_query">
+                                <label for="start">Begining:</label>
+                                <input type="date" id="begin" name="begin" format= 'dd/mm/yyyy' startDate= '-3d'>
+                                <label for="start">Until:</label>
+                                <input type="date" id="until" name="until" format= 'dd/mm/yyyy' startDate= '-3d'>
+                                <div id="message"></div>
+                                <input type="submit" id="submit" value="To Date" >
+                            </div>
+                        </form>
+                            
+                        <!--
+                        <input oninput="updateChart(this)" type="range" id="points" value="2" min="1" max="3">
+                        {% for prod in products %}
+                            <div class="form-check form-switch form-check-inline">
+                                <input class="form-check-input" type="checkbox" id="flexSwitchCheckDefault">
+                                <label class="form-check-label" for="flexSwitchCheckDefault">{{prod.name}}</label>
+                            </div>
+                        {% endfor %}
+                        -->
+
                     </div>
-                {% endfor %}
-                -->
+                    <br>
+                    <button onclick="saveAsPDF();">save as pdf</button>
+                </div>
 
             </div>
-            <br>
-            <button onclick="saveAsPDF();">save as pdf</button>
         </div>
+      
     </div>
 
     <script>

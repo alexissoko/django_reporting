@@ -22,7 +22,7 @@
     <div class="navbar navbar-default visible-xs">
         <div class="container-fluid">
           <button class="btn btn-default navbar-btn" data-toggle="collapse" data-target="#filter-sidebar">
-            <i class="fa fa-tasks"></i> Toggle Sidebar
+            <i class="fa fa-tasks"></i> Choose Items
           </button>
         </div>
     </div>
@@ -34,24 +34,15 @@
           <!-- filter sidebar -->
             <div id="filter-sidebar" class="col-xs-6 col-sm-3 visible-sm visible-md visible-lg collapse sliding-sidebar">
         
-                <div>
-                    <h4 data-toggle="collapse" data-target="#group-1">
-                        <i class="fa fa-fw fa-caret-down parent-expanded"></i>
-                        <i class="fa fa-fw fa-caret-right parent-collapsed"></i>
-                        Sales
-                    </h4>
-                    <div id="group-1" class="list-group collapse in">
-                        <a class="list-group-item" href="#">
-                        <span class="badge">3</span> Sale 1
-                        </a>
-                        <a class="list-group-item" href="#">
-                        <span class="badge">3</span> Sale 2
-                        </a>
-                        <a class="list-group-item" href="#">
-                        <span class="badge">3</span> Sale 3
-                        </a>
+                <div id="group-1" class="list-group">
+                    {% for prod in products %}
+                    <div class="custom-control custom-checkbox">
+                        <input type="checkbox" class="custom-control-input" id="defaultUnchecked">
+                        <label class="custom-control-label" for="defaultUnchecked">{{ prod.name }}</label>
                     </div>
+                    {% endfor %}
                 </div>
+            
             </div>
         
             <!-- table container -->
