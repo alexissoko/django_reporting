@@ -31,18 +31,19 @@
       
           <!-- filter sidebar -->
             <div id="filter-sidebar" class="col-xs-6 col-sm-3 visible-sm visible-md visible-lg collapse sliding-sidebar">
-        
+
                 <div id="group-1" class="list-group">
                     {% for inp in inputs %}
-                    <div class="custom-control custom-checkbox">
-                        <input type="checkbox" class="custom-control-input" id="defaultUnchecked">
-                        <label class="custom-control-label" for="defaultUnchecked">{{ inp.name }}</label>
-                    </div>
+                    <div class="form-check">
+                        <label class="form-check-label">
+                          <input type="checkbox" class="form-check-input" value="">{{ inp.name}}
+                        </label>
+                    </div>    
                     {% endfor %}
-
-                </div>
-            
+                </div>    
+                <button onclick="#">Search</button>
             </div>
+            
         
             <!-- table container -->
             <div class="col-sm-9">

@@ -36,15 +36,15 @@
         
                 <div id="group-1" class="list-group">
                     {% for prod in products %}
-                    <li class="custom-control custom-checkbox">
-                        <input type="checkbox" class="custom-control-input" id="defaultUnchecked">
-                        <label class="custom-control-label" for="defaultUnchecked">{{ prod.name }}</label>
-                    </li>
+                    <div class="form-check">
+                        <label class="form-check-label">
+                          <input type="checkbox" class="form-check-input" value="">{{ prod.name}}
+                        </label>
+                    </div>    
                     {% endfor %}
-                </div>
+                </div>      
             
             </div>
-        
             <!-- table container -->
             <div class="col-sm-9">
         
