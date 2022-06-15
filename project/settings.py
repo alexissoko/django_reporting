@@ -121,14 +121,15 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/4.0/howto/static-files/
 
 
-119 STATIC_URL = 'static/'
-120 SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
-121 
-122 import os
-123 # STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
-124 STATIC_ROOT = "/home/alexissoko/myproject/static"
-125 STATICFILES_DIRS = (
-126     os.path.join(BASE_DIR, 'static'),)
+STATIC_URL = 'static/'
+STATIC_URL = 'static/'
+SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
+
+import os
+# STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
+STATIC_ROOT = "/home/alexissoko/myproject/static"
+STATICFILES_DIRS = (
+    os.path.join(BASE_DIR, 'static'),)
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.0/ref/settings/#default-auto-field
 
