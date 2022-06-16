@@ -32,7 +32,12 @@ def reporting_sales(request):
     else:
         mesh_to = timezone.now().strftime('%Y-%m-%d')
     sales = Sale.objects.filter(date__range=[mesh_from, mesh_to]).order_by("-date")
-
+    
+    sold_objs = {}
+    for sale in sales:
+        if sale.invoice.name not in sold_objs:
+            sold_objs[sale.invoice.name] = sale.invoice.id
+    
     all_data = {prod.invoice.name: {} for prod in sales}
     df_labels = sorted([x[0].strftime('%Y-%m-%d') for x in sales.values_list("date").distinct()])
 
@@ -49,22 +54,22 @@ def reporting_sales(request):
 
 
     mydict= {
-        'sales':sales,
-        "all_data" : sorted(all_data),
-        'products':Product.objects.all(),
-        'inputs':Input.objects.all(),
-        # "df1" : sorted({x["date"].strftime('%Y-%m-%d'): x["quantity"] for x in sales.values().order_by("-date") if x["invoice_id"] == 1}.items()),
+        'sold_objs':sold_objs,
         "df_labels" : df_labels,
         "labels" : list(all_data.keys()),
         "values" : list(all_data.values()),
     
     }
-    print('mydict["inputs"]')
-    print(mydict["inputs"])
     return render(request, 'sales.html', context=mydict)
 
 @login_required
 def reporting_providers(request):
+    print('boxes')
+    if request.method == 'POST':
+        pass
+    else:
+        print(request.GET.getlist("boxes"))
+        
     if request.GET.get("begin"):
         mesh_from = request.GET.get("begin")
     else:
@@ -73,12 +78,17 @@ def reporting_providers(request):
         mesh_to = request.GET.get("until")
     else:
         mesh_to = timezone.now().strftime('%Y-%m-%d')
-    sales = Purchase.objects.filter(date__range=[mesh_from, mesh_to]).order_by("-date")
+    purchases = Purchase.objects.filter(date__range=[mesh_from, mesh_to]).order_by("-date")
 
-    all_data = {prod.invoice.name: {} for prod in sales}
-    df_labels = sorted([x[0].strftime('%Y-%m-%d') for x in sales.values_list("date").distinct()])
+    bought_objs = {}
+    for buy in purchases:
+        if buy.invoice.name not in bought_objs:
+            bought_objs[buy.invoice.name] = buy.invoice.id
+    
+    all_data = {prod.invoice.name: {} for prod in purchases}
+    df_labels = sorted([x[0].strftime('%Y-%m-%d') for x in purchases.values_list("date").distinct()])
 
-    for sale in sales:
+    for sale in purchases:
         all_data[sale.invoice.name][sale.date.strftime('%Y-%m-%d')] = sale.quantity
     
     for label in df_labels:
@@ -91,17 +101,12 @@ def reporting_providers(request):
 
 
     mydict= {
-        'sales':sales,
-        'products': Product.objects.values().order_by("-date"),
         'inputs': Input.objects.all(),
-        "all_data" : sorted(all_data),
-        "df1" : sorted({x["date"].strftime('%Y-%m-%d'): x["quantity"] for x in sales.values().order_by("-date") if x["invoice_id"] == 1}.items()),
+        'bought_objs': bought_objs,
         "df_labels" : df_labels,
         "labels" : list(all_data.keys()),
         "values" : list(all_data.values()),
     
     }
-    print('mydict["inputs"]')
-    print(mydict["inputs"])
     return render(request, 'providers.html', context=mydict)
 

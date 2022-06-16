@@ -35,15 +35,16 @@
             <div id="filter-sidebar" class="col-xs-6 col-sm-3 visible-sm visible-md visible-lg collapse sliding-sidebar">
         
                 <div id="group-1" class="list-group">
-                    {% for prod in products %}
+                    {% for k, v in sold_objs.items %}
                     <div class="form-check">
                         <label class="form-check-label">
-                          <input type="checkbox" class="form-check-input" value="">{{ prod.name}}
+                          <input type="checkbox" class="form-check-input" value="">{{ k }}
                         </label>
                     </div>    
                     {% endfor %}
                 </div>      
-            
+                <button onclick="#">Search</button>
+
             </div>
             <!-- table container -->
             <div class="col-sm-9">
@@ -60,6 +61,7 @@
                                 <div id="message"></div>
                                 <input type="submit" id="submit" value="To Date" >
                             </div>
+                            
                         </form>
                             
                         <!--
