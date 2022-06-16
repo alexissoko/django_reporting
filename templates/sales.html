@@ -33,18 +33,23 @@
       
           <!-- filter sidebar -->
             <div id="filter-sidebar" class="col-xs-6 col-sm-3 visible-sm visible-md visible-lg collapse sliding-sidebar">
-        
-                <div id="group-1" class="list-group">
-                    {% for k, v in sold_objs.items %}
-                    <div class="form-check">
-                        <label class="form-check-label">
-                          <input type="checkbox" class="form-check-input" value="">{{ k }}
-                        </label>
-                    </div>    
-                    {% endfor %}
-                </div>      
-                <button onclick="#">Search</button>
 
+                <form method="GET">
+                    <div id="group-1">
+                        {% for k, v in sold_objs.items %}
+                        <div class="form-check">
+                            <label class="form-check-label">
+                            <input type="checkbox" class="form-check-input" name="boxes" value="">{{ k }}
+                            </label>
+                        </div>    
+                        {% endfor %}
+                    </div>    
+                    <button type="submit" class="btn btn-primary">Submit</button>
+                    <script>
+                        console.log("It's happening")
+                        console.log(document.getElementsByClassName("list-group-item"))
+                    </script>
+                </form>
             </div>
             <!-- table container -->
             <div class="col-sm-9">
@@ -58,8 +63,8 @@
                                 <input type="date" id="begin" name="begin" format= 'dd/mm/yyyy' startDate= '-3d'>
                                 <label for="start">Until:</label>
                                 <input type="date" id="until" name="until" format= 'dd/mm/yyyy' startDate= '-3d'>
+                                <button type="submit" class="btn btn-primary">To Date</button>
                                 <div id="message"></div>
-                                <input type="submit" id="submit" value="To Date" >
                             </div>
                             
                         </form>
@@ -76,7 +81,7 @@
 
                     </div>
                     <br>
-                    <button onclick="saveAsPDF();">save as pdf</button>
+                    <button onclick="saveAsPDF();" class="btn btn-primary">save as pdf</button>
                 </div>
 
             </div>
