@@ -14,9 +14,10 @@ pip install -r requierements
 
 ## Usage
 
-
+```python
 python manage.py runserver
-python manage.py createsuperuser 
+python manage.py createsuperuser
+```
 add data from admin
 check results in frontend
 
