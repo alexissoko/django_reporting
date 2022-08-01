@@ -6,7 +6,7 @@ Use the package manager [pip](https://pip.pypa.io/en/stable/) to install de app 
 
 ```bash
 clone repo
-pip isntall virtualenv
+pip install virtualenv
 virtualenv --python=python3.9.12 <env_name>
 pip install -r requierements
 ```
