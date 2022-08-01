@@ -18,8 +18,9 @@ pip install -r requierements
 python manage.py createsuperuser
 python manage.py runserver
 ```
-add data from admin
-check results in frontend
+Add data from admin.
+
+Check results in frontend.
 
 ## Contributing
 Pull requests are welcome. For major changes, please open an issue first to discuss what you would like to change.
