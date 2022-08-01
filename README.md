@@ -8,6 +8,7 @@ Use the package manager [pip](https://pip.pypa.io/en/stable/) to install de app 
 clone repo
 pip install virtualenv
 virtualenv --python=python3.9.12 <env_name>
+source bin/activate
 pip install -r requierements
 ```
 
