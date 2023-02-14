@@ -3,11 +3,11 @@ from.models import *
 
 
 # Register your models here.
-admin.site.register(Input)
-admin.site.register(SubProduct)
-admin.site.register(Product)
-admin.site.register(Provider)
+admin.site.register(Owner)
+admin.site.register(Sport)
+admin.site.register(ClassSport)
 admin.site.register(Customer)
-admin.site.register(Sale)
-admin.site.register(Purchase)
+admin.site.register(User)
+admin.site.register(Membership)
+admin.site.register(Payment)
 admin.site.site_header = 'Pedidos'
